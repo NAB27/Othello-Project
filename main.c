@@ -3,7 +3,7 @@ Manal & Nabih, have fun! */
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char const *argv[])
+int main()
 {
 
 char etat;
@@ -18,11 +18,7 @@ if(re==0){
  for(i=0;i<8;i++){
   printf("\t  +---+---+---+---+---+---+---+---+\n");}
  printf("\t    A   B   C   D   E   F   G   H  \n ");}
-    return 0;
+  
 /****caracteristiques*****/
 
-}
-Display(){
-    /*code*/
-}
 
