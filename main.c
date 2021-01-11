@@ -5,7 +5,21 @@ Manal & Nabih, have fun! */
 
 int main(int argc, char const *argv[])
 {
-    /* code */
+
+char etat;
+int re;
+/**
+printf("est ce que tu veux jouer entrer recommencer");
+scanf("%s",etat);
+re=strcmp(etat,"recommencer");****/
+if(re==0){
+ int i;
+ printf("\t    A   B   C   D   E   F   G   H  ");
+ for(i=0;i<8;i++){
+  printf("\t  +---+---+---+---+---+---+---+---+\n");}
+ printf("\t    A   B   C   D   E   F   G   H  \n ");}
     return 0;
+/****caracteristiques*****/
+
 }
 
