@@ -22,4 +22,7 @@ if(re==0){
 /****caracteristiques*****/
 
 }
+Display(){
+    /*code*/
+}
 
