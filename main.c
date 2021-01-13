@@ -27,3 +27,4 @@ if (re=13 )/**le code ascii de la touche entrer ***/{
     for(i=0;i<8;i++){
         printf("\t  +---+---+---+---+---+---+---+---+\n");}
         printf("\t    A   B   C   D   E   F   G   H  \n ");}}
+        /* hihihi*/
