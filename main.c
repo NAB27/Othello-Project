@@ -28,3 +28,4 @@ if (re=13 )/**le code ascii de la touche entrer ***/{
         printf("\t  +---+---+---+---+---+---+---+---+\n");}
         printf("\t    A   B   C   D   E   F   G   H  \n ");}}
         /* hihihi*/
+        /*test without saving & fitching?*/
