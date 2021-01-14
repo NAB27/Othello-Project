@@ -15,11 +15,10 @@ if (etat==114){
     printf(" \t voila! votre espace :\n");
     printf("\t[-A-,-B-,-C-,-D-,-E-,-F-,-G-,-H-]\n");
     for(i=0;i<8;i++){
-<<<<<<< HEAD
         printf("\t ---,---,---,---,---,---,---,---,\n ");
     }printf("\t[-A-,-B-,-C-,-D-,-E-,-F-,-G-,-H-]\n");}
 /****les caracteristiques****/
-FILE*fichier=NULL;//creatio d'un fichier
+FILE *fichier = NULL;//creatio d'un fichier
 //infos
 char nom[20];
 int score;
