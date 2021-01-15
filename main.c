@@ -28,11 +28,11 @@ printf("donner le nom du joueur qui veut jouer par le blanc\n");
 scanf("%s",&nom);
 score=0;
 fopen(fichier,"w");
-fwrite(&nom,sizeof(nom),1,fichier);
-fwrite(&score,sizeof(score),1,fichier);
+fscanf(fichier,"%s",&nom);
+fscanf(fichier,"%d",&score);
 printf("donner le nom du joueur qui veut jouer par le noir\n");
 scanf("%s",&nom);
 score=0;
-fwrite(&nom,sizeof(nom),1,fichier);
-fwrite(&score,sizeof(score),1,fichier);
+fscanf(fichier,"%s",&nom);
+fscanf(fichier,"%d",&score);
 fclose(fichier);}
