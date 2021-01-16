@@ -18,21 +18,23 @@ if (etat==114){
         printf("\t ---,---,---,---,---,---,---,---,\n ");
     }printf("\t[-A-,-B-,-C-,-D-,-E-,-F-,-G-,-H-]\n");}
 /****les caracteristiques****/
-FILE *fichier = NULL;//creatio d'un fichier
+FILE *fichier = NULL;//fichier est un pointeur de type file
 //infos
 char nom[20];
 int score;
-char mot_de_passe;
+char scorec[20];
+char *mot_de_passe;
 //enregistrement
 printf("donner le nom du joueur qui veut jouer par le blanc\n");
 scanf("%s",&nom);
 score=0;
-fopen(fichier,"w");
+fichier = fopen("C:\\Users\\user\\Documents\\GitHub\\Othello-Project\\Basededonnees.txt","w"); //ajoutez la l'emplacement du fichier "C:..." dans la premiere case
 fwrite(&nom,sizeof(nom),1,fichier);
 fwrite(&score,sizeof(score),1,fichier);
 printf("donner le nom du joueur qui veut jouer par le noir\n");
 scanf("%s",&nom);
 score=0;
+scorec[0] = (char) score;
 fwrite(&nom,sizeof(nom),1,fichier);
-fwrite(&score,sizeof(score),1,fichier);
+fwrite(&scorec,sizeof(scorec),1,fichier);
 fclose(fichier);}
