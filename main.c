@@ -28,7 +28,6 @@ char *mot_de_passe;
 printf("donner le nom du joueur qui veut jouer par le blanc\n");
 scanf("%s",&nom);
 score=0;
-<<<<<<< HEAD
 fichier = fopen("C:\\Users\\user\\Documents\\GitHub\\Othello-Project\\Basededonnees.txt","w"); //ajoutez la l'emplacement du fichier "C:..." dans la premiere case
 fwrite(&nom,sizeof(nom),1,fichier);
 fwrite(&score,sizeof(score),1,fichier);
@@ -38,7 +37,6 @@ score=0;
 scorec[0] = (char) score;
 fwrite(&nom,sizeof(nom),1,fichier);
 fwrite(&scorec,sizeof(scorec),1,fichier);
-=======
 fopen(fichier,"w");
 fscanf(fichier,"%s",&nom);
 fscanf(fichier,"%d",&score);
@@ -47,5 +45,4 @@ scanf("%s",&nom);
 score=0;
 fscanf(fichier,"%s",&nom);
 fscanf(fichier,"%d",&score);
->>>>>>> db76a179660a14a1f84989718ee78ec59d048d64
 fclose(fichier);}
