@@ -7,7 +7,9 @@
 /*************prototype*************/
 int*chercher(FILE*Fichier);
 void*creation_joueur();
-
+void*jeu();
+void position(short x, short y);
+void Display(char Board[8][8]);
 
 
 
@@ -46,13 +48,41 @@ if(chercher(fichier)==0){
 scanf("%s",nom);
 score=0;
 fprintf(fichier,"%s\n%d\n ",&nom,&score);}}
-
+//l'ajout successif dans une liste chainee a partir d'un fichier
+joueur*remplissage(){
+joueur*list=NULL;
+joueur*joueur1;
+joueur1=(joueur*)malloc(sizeof(joueur));
+FILE*fichier;
+fichier=fopen("manal","r");
+while(fgets(joueur1->nom,20,fichier)&&fgets(joueur1->score,20,fichier)){joueur1->suivant=list;
+                                                                          list=joueur1;}
+return list;}
+void*affichage_scores(joueur*list){
+//tri de la liste chainee(tri a bulles)   
+	joueur*p;
+	int d=1;
+	char permu[20];
+	while(d==1)
+	{d=0;
+	for(p=list;p!=NULL;p=p->suivant)
+	{if((p->score)>((p->suivant)->score))
+		{strcpy(permu,(p->score));
+		 strcpy((p->score),((p->suivant)->score));
+		 strcpy(((p->suivant)->score),permu);
+		d=1;
+		}}}
+/*affichages des scores***/
+if (list==NULL){
+printf(" Liste vide !!\n"); return ;}
+else { joueur*temp=list;
+        while(temp!=NULL){
+        printf("%s",temp->nom);
+        printf("%s",temp->score);}}}
 
 /*########livrable2########*/
-void Display(char [8][8]);   //affichage du tableau
-void position(short x, short y)           //definition of gotoxy function//
-{
- COORD pos ={x,y};  //la position
+void position(short x, short y){
+COORD pos ={x,y};  //la position
  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 void Display(char Board[8][8])
@@ -69,8 +99,8 @@ void Display(char Board[8][8])
  printf("\n  +---+---+---+---+---+---+---+---+\n");}
  printf("   A   B   C   D   E   F   G   H  ");
 }
-/**####MAIN#####**/
-int main(){
+
+void*jeu(){
 Intro:     //label
 
 system("cls");
@@ -570,5 +600,90 @@ if(Pla==Opp)
  position(30,10);
  printf("egalite !!!!!!");
 }
-getch();
+getch();}
+
+
+/*####################livrable3#################*/
+typedef struct securite{
+char nom[20];
+char mot_de_passe[16];
+struct securite*suivant;}securite;
+
+void ajout_acces_securise(char nom[20],char mot_de_passe[16],securite*list){
+//infos sous forme srtucture de donnee
+typedef struct securite{
+char nom[20];
+char mot_de_passe[16];
+struct securite*suivant;}securite;
+if (list==NULL){printf("la liste est vide");}
+// liste chainee contenant tout les utilisateurs inscrits
+securite*jou;
+jou=(securite*)malloc(sizeof(securite));
+strcpy(jou->nom,nom);
+strcpy(jou->mot_de_passe,mot_de_passe);
+//l'ajout
+jou->suivant=list;
+list=jou;
+}
+
+//deja enregistre
+void connection(securite*debut){
+    char nom_util[20],mot_de_passe[20];
+    char choix[20];
+    printf("est ce que vous etes deja inscrit dans ce jeu ");
+    scanf("%s",&choix);
+    if(strcpy(choix,'oui')==0){
+            printf("donner votre nom d'utilisateur");
+            scanf("%s",&nom_util);
+            printf("donner votre mot de passe ");
+            scanf("%s",&mot_de_passe);
+            securite*temp=debut;
+            while((temp->suivant)!=NULL){if(strcpy(nom_util,temp->nom)==0)
+                                         {if (strcpy(mot_de_passe,temp->mot_de_passe)==0)
+                                           printf("bienvenue");}
+                                          else{printf("mot de passe incorrect");}}}
+   else{
+    printf("entrer votre nom d'utilisateur");
+    scanf("%s",&nom_util);
+    printf("choisissez votre mot de passe ");
+            scanf("%s",&mot_de_passe);
+    //creation d'un espace utilisateur
+    securite*utilisateur=(securite*)malloc(sizeof(securite));
+    strcpy(utilisateur->nom,nom_util);
+    strcpy(utilisateur->mot_de_passe,mot_de_passe);
+    utilisateur->suivant=debut;
+    debut=utilisateur;}
+}
+
+
+
+
+
+
+///#####################################MAIN#############################################
+int main(){
+int i;
+char car;
+printf("si vous voulez recomencer le jeu tapez");
+scanf("%s",&car);
+if(car==114){
+printf("\t\t  ####****************************####\n");
+printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
+printf("\t\t  ####****************************####\n");
+printf("\t\t  a  b  c  d  e  f  g  h\n");
+for(i=0;i<8;i++){
+printf("\t\t%d:__,__,__,__,__,__,__,__,\n",i+1);}}
+typedef struct joueur{
+char nom[20];
+char score[20];
+struct joueur*suivant;}joueur
+jeu();}
+
+
+
+
+
+
+
+
 }
