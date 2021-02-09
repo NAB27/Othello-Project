@@ -4,6 +4,10 @@
 #include<ctype.h>
 #include<windows.h>
 #include<time.h>
+#include<gtk/gtk.h>
+
+
+
 /*************prototype*************/
 int*chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
 void*creation_joueur();    //cree les nouveaux joueurs 

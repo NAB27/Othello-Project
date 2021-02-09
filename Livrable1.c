@@ -1,4 +1,7 @@
-
+#include<stdlib.h>
+#include<conio.h>
+#include<stdio.h>
+#include<gtk/gtk.h>
 
 // structures
 typedef struct mouvement mouvement; //structure  qui contient les données relatives au mouvement effectués par les joueurs
