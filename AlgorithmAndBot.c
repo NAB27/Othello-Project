@@ -13,6 +13,23 @@ typedef struct joueurr{
 char nom[20];
 char score[20];
 struct joueurr*suivant;}joueurr;
+/*#####livrable1#######*/
+
+int*chercher(FILE*Fichier){
+    char motFr[30], motR[30];
+    Fichier = fopen("projet_c.txt", "r");
+    if (!Fichier)
+         printf("\aERREUR: Impossible d'ouvrir le fichier\n");
+    printf("\tentrer votre nom slv\t");
+    scanf("%s",&motR);
+    while(fgets(motFr,30,Fichier) != NULL)
+    {if (strstr(motFr,motR) != NULL){
+          printf("||||joueur deja existe bienvenue autre fois||||\n");    //deja existe 
+          return 1;}
+    }
+    fclose(Fichier);
+    printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");    
+    return 0;}
 
 void*creation_joueurr(){
 FILE*fichier;
@@ -30,6 +47,8 @@ if(chercher(fichier)==0){  //nouveau joueur
 scanf("%s",nom);
 score=0;                    //score nul
 fprintf(fichier,"%s\n%d\n ",&nom,&score);}}
+
+
 void*affichage_scores(joueurr*list){
 //tri de la liste chainee(tri a bulles)
     joueurr*p;
@@ -52,22 +71,6 @@ else { joueurr*temp=list;
         printf("%s",temp->nom);
         printf("%s",temp->score);}}}
 
-/*#####livrable1#######*/
-int*chercher(FILE*Fichier){
-    char motFr[30], motR[30];
-    Fichier = fopen("projet_c.txt", "r");
-    if (!Fichier)
-         printf("\aERREUR: Impossible d'ouvrir le fichier\n");
-    printf("\tentrer votre nom slv\t");
-    scanf("%s",&motR);
-    while(fgets(motFr,30,Fichier) != NULL)
-    {if (strstr(motFr,motR) != NULL){
-          printf("||||joueur deja existe bienvenue autre fois||||\n");    //deja existe 
-          return 1;}
-    }
-    fclose(Fichier);
-    printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");    
-    return 0;}
 
 const int chemin[8]= {-11, -10, -9, -1, 1, 9, 10, 11};
 const int table=100;
@@ -159,8 +162,6 @@ int totale (int combatant, int * latabl) {
         if (latabl[i] == combatant) t++;
     return t;
 }
-
-
 
 void afficher (int * latabl) {
     int row, col;
@@ -585,17 +586,19 @@ void jeux (void) {
 
 
 int main (void) {
-    printf("\t\t  ####****************************####\n");
-    printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
-        printf("\t\t  ##\t      realise par    \t    ##\n");
-            printf("\t\t  ##\t Nabih MOCHIR & Manal MOUFLIH\t    ##\n");
-    printf("\t\t  ####****************************####\n");
+int i;
+char car;
+printf("si vous voulez recomencer le jeu tapez r ");
+scanf("%s",&car);
+if(car==114){
+printf("\t\t  ####****************************####\n");
+printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
+printf("\t\t  ####****************************####\n");
+printf("\t\t  a  b  c  d  e  f  g  h\n");
+for(i=0;i<8;i++){
+printf("\t\t%d:__,__,__,__,__,__,__,__,\n",i+1);}}
     jeux();
     fflush(stdin);
-    printf("vous voulez recommencer? (y)oui ou (n)non? ");
-    if (getchar() == 'y') {
-        jeux();
-        fflush(stdin);
 
     }
 }
