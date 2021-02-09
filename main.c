@@ -5,11 +5,23 @@
 #include<windows.h>
 #include<time.h>
 /*************prototype*************/
-int*chercher(FILE*Fichier);
-void*creation_joueur();
-void*jeu();
-void position(short x, short y);
-void Display(char Board[8][8]);
+int*chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
+void*creation_joueur();    //cree les nouveaux joueurs 
+void*jeu();                    //le jeu complet
+void position(short x, short y);   //la saisie du position par rapport aux notations prises
+void Display(char Board[8][8]);      // affiche le taleau a chaque fois
+
+
+//les structures
+typedef struct joueur{
+char nom[20];
+char score[20];
+struct joueur*suivant;}joueur;
+
+typedef struct securite{
+char nom[20];
+char mot_de_passe[16];
+struct securite*suivant;}securite;
 
 
 
@@ -23,11 +35,11 @@ int*chercher(FILE*Fichier){
     scanf("%s",&motR);
     while(fgets(motFr,30,Fichier) != NULL)
     {if (strstr(motFr,motR) != NULL){
-          printf("||||joueur deja existe bienvenue autre fois||||\n");
+          printf("||||joueur deja existe bienvenue autre fois||||\n");    //deja existe 
           return 1;}
     }
     fclose(Fichier);
-    printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");
+    printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");    
     return 0;}
 
 /****fonction qui cree les joueurs nouveaux pour les autres conserve meme score**/
@@ -44,12 +56,12 @@ scanf("%s",nom);
 score=0;
 fprintf(fichier,"%s\n%d\n ",&nom,&score);}
 /*****le deuxieme***/
-if(chercher(fichier)==0){
+if(chercher(fichier)==0){  //nouveau joueur
 scanf("%s",nom);
-score=0;
-fprintf(fichier,"%s\n%d\n ",&nom,&score);}}
+score=0;                    //score nul
+fprintf(fichier,"%s\n%d\n ",&nom,&score);}}  //pour les joueurs deja existes on garde le meme score
 //l'ajout successif dans une liste chainee a partir d'un fichier
-joueur*remplissage(){
+joueur*remplissage(){  
 joueur*list=NULL;
 joueur*joueur1;
 joueur1=(joueur*)malloc(sizeof(joueur));
@@ -58,7 +70,7 @@ fichier=fopen("manal","r");
 while(fgets(joueur1->nom,20,fichier)&&fgets(joueur1->score,20,fichier)){joueur1->suivant=list;
                                                                           list=joueur1;}
 return list;}
-void*affichage_scores(joueur*list){
+void*affichage_scores(joueur*list){ //tri de la liste
 //tri de la liste chainee(tri a bulles)   
 	joueur*p;
 	int d=1;
@@ -72,7 +84,7 @@ void*affichage_scores(joueur*list){
 		 strcpy(((p->suivant)->score),permu);
 		d=1;
 		}}}
-/*affichages des scores***/
+/*affichages des scores***/    //la pracours de liste triee
 if (list==NULL){
 printf(" Liste vide !!\n"); return ;}
 else { joueur*temp=list;
@@ -119,7 +131,7 @@ printf("Entrer votre symbole et de votre adversaire ");
 scanf("%c %c",&A,&B);
 if(A==B)
 {
- printf("les symboles se ressemblent........");
+ printf("les symboles se ressemblent........");  //les memes symboles
  Sleep(1000);
  goto Intro;
 }
@@ -192,7 +204,7 @@ if(Board[Y][X]!=' ')
  Sleep(500);
  goto start;
 }
-//POSITION VALIDE
+//      POSITION VALIDE
 if((Board[Y-1][X-1]!=A) &&(Board[Y-1][X]!=A) &&(Board[Y-1][X+1]!=A)&&(Board[Y][X-1]!=A)&&(Board[Y][X+1]!=A)&&(Board[Y+1][X-1]!=A)&&(Board[Y+1][X]!=A)&&(Board[Y+1][X+1]!=A)){
    printf("position invalide");
    goto start;}
@@ -608,17 +620,9 @@ getch();}
 
 
 /*####################livrable3#################*/
-typedef struct securite{
-char nom[20];
-char mot_de_passe[16];
-struct securite*suivant;}securite;
 
 void ajout_acces_securise(char nom[20],char mot_de_passe[16],securite*list){
 //infos sous forme srtucture de donnee
-typedef struct securite{
-char nom[20];
-char mot_de_passe[16];
-struct securite*suivant;}securite;
 if (list==NULL){printf("la liste est vide");}
 // liste chainee contenant tout les utilisateurs inscrits
 securite*jou;
@@ -680,7 +684,7 @@ printf("\t\t%d:__,__,__,__,__,__,__,__,\n",i+1);}}
 typedef struct joueur{
 char nom[20];
 char score[20];
-struct joueur*suivant;}joueur
+struct joueur*suivant;}joueur;
 jeu();}
 
 
