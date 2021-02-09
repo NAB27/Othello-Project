@@ -115,7 +115,7 @@ printf("\t\t  ####****************************####\n");
 printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
 printf("\t\t  ####****************************####\n");
 Sleep(3000);
-printf("Entrer votre symbole et symbole d'adversaire ");
+printf("Entrer votre symbole et de votre adversaire ");
 scanf("%c %c",&A,&B);
 if(A==B)
 {
@@ -192,6 +192,10 @@ if(Board[Y][X]!=' ')
  Sleep(500);
  goto start;
 }
+//POSITION VALIDE
+if((Board[Y-1][X-1]!=A) &&(Board[Y-1][X]!=A) &&(Board[Y-1][X+1]!=A)&&(Board[Y][X-1]!=A)&&(Board[Y][X+1]!=A)&&(Board[Y+1][X-1]!=A)&&(Board[Y+1][X]!=A)&&(Board[Y+1][X+1]!=A)){
+   printf("position invalide");
+   goto start;}
 Board[Y][X]=A;
 B = Tick;
 //teste du cote gauche
