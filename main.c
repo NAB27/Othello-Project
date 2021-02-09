@@ -5,7 +5,6 @@
 #include<windows.h>
 #include<time.h>
 /*************prototype*************/
-<<<<<<< Updated upstream
 int*chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
 void*creation_joueur();    //cree les nouveaux joueurs 
 void*jeu();                    //le jeu complet
@@ -14,23 +13,34 @@ void Display(char Board[8][8]);      // affiche le taleau a chaque fois
 
 
 //les structures
-typedef struct joueur{
-char nom[20];
-char score[20];
-struct joueur*suivant;}joueur;
 
 typedef struct securite{
 char nom[20];
 char mot_de_passe[16];
 struct securite*suivant;}securite;
-=======
+
+typedef struct mouvement mouvement; //structure  qui contient les données relatives au mouvement effectués par les joueurs
+struct mouvement
+{
+    char coordonnee[10];
+    char player[2];
+    int numero;
+    mouvement *suivant;
+};
+
+typedef struct historique historique; // liste qui contient le premier  mouvement effectué
+struct historique
+{
+    mouvement *premier;
+
+};
+
 int*chercher(FILE*Fichier);
 void*creation_joueur();
 void*jeu();
 void position(short x, short y);
 void Display(char Board[8][8]);
 int n,n2; // on va utiliser cette variable pour savoir si l'utilisateur veut que la partie soit enregistrée ou pas
->>>>>>> Stashed changes
 
 typedef struct joueur{
 char nom[20];
@@ -57,21 +67,7 @@ int*chercher(FILE*Fichier){
 
 
 
-typedef struct mouvement mouvement; //structure  qui contient les données relatives au mouvement effectués par les joueurs
-struct mouvement
-{
-    char coordonnee[10];
-    char player[2];
-    int numero;
-    mouvement *suivant;
-};
 
-typedef struct historique historique; // liste qui contient le premier  mouvement effectué
-struct historique
-{
-    mouvement *premier;
-
-};
 
 
 historique *initialmouvement() //fonction qui initialise la liste chainée historique
@@ -96,7 +92,7 @@ historique *initialmouvement() //fonction qui initialise la liste chainée histo
     return Historique;
 }
 
-void insertmouvement(historique *Historique, char newplayer, char newcoordonnee) //fonction qui ajoute les mouvements dans la liste chainée historique
+void insertmouvement(historique *Historique, char *newplayer, char *newcoordonnee) //fonction qui ajoute les mouvements dans la liste chainée historique
 {
     mouvement *new = malloc(sizeof(*new));
     if (Historique == NULL || new == NULL)
@@ -489,11 +485,11 @@ again:
 X = rand()%8;
 Y = rand()%8;
 W = 0;
-if(Board[Y][X]!=' ')
+    if (Board[Y][X]!=' ')
 goto again;
- if(Board[Y+1][X]==A)
+    if (Board[Y+1][X]==A)
  W++;
- if(Board[Y][X+1]==A)
+ if (Board[Y][X+1]==A)
  W++;
  if(Board[Y+1][X+1]==A)
  W++;
@@ -779,7 +775,7 @@ void connection(securite*debut){
     debut=utilisateur;}
 }
 
-void save(historique *Historique)   //fonction qui affiche les mouvements effectuées durant le match
+void save_pointeur(historique *Historique)   //fonction qui affiche les mouvements effectuées durant le match
 {
         FILE *saved;
         saved = fopen(C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt, w); //le chemin du fichier qui contiendra le sauvgardage
@@ -798,8 +794,29 @@ void save(historique *Historique)   //fonction qui affiche les mouvements effect
     }
     printf("NULL\n");
     int fclose(saved);
+}*/
+void load ();
+ int I,J;
+    FILE *saved;
+    saved = fopen(C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt, r); //le chemin du fichier qui contiendra le sauvgardage
+        if (saved == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    int fclose(saved);
+ return 0;
+void save (char tab[8][8]){
+ int I,J;
+    FILE *saved;
+    saved = fopen(C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt, w); //le chemin du fichier qui contiendra le sauvgardage
+
+    for (I=0; I<9; I++){
+        for (J=0; J<10; J++){
+           fprintf(saved,"%c",&tab[I][J]);}}
+    int fclose(saved);
+ return 0;
 }
-void load (historique *Historique)
 
 
 
