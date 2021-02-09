@@ -157,13 +157,8 @@ fichier=fopen("manal","r");
 while(fgets(joueur1->nom,20,fichier)&&fgets(joueur1->score,20,fichier)){joueur1->suivant=list;
                                                                           list=joueur1;}
 return list;}
-<<<<<<< Updated upstream
-void*affichage_scores(joueur*list){ //tri de la liste
-//tri de la liste chainee(tri a bulles)   
-=======
 void*affichage_scores(joueur*list){
 //tri de la liste chainee(tri a bulles)
->>>>>>> Stashed changes
 	joueur*p;
 	int d=1;
 	char permu[20];
@@ -704,7 +699,7 @@ scanf("%d",&n);
 if (n==1){showmouvement(history);}
  printf("vous voulez sauvgarder la parite? (y=1/n=0)");
 scanf("%d",&n2);
-if (n==1){save(history);}
+if (n==1){save(Board);}
 }
 if(Pla<Opp)
 {
@@ -715,7 +710,7 @@ scanf("%d",&n);
 if (n==1){showmouvement(history);}
  printf("vous voulez sauvgarder la parite? (y=1/n=0)");
 scanf("%d",&n2);
-if (n==1){save(history);}
+if (n==1){save(Board);}
 }
 if(Pla==Opp)
 {
@@ -727,7 +722,7 @@ if (n==1){showmouvement(history);}
 
  printf("vous voulez sauvgarder la parite? (y=1/n=0)");
 scanf("%d",&n2);
-if (n==1){save(history);}}
+if (n==1){save(Board);}}
 getch();}
 
 
@@ -794,28 +789,33 @@ void save_pointeur(historique *Historique)   //fonction qui affiche les mouvemen
     }
     printf("NULL\n");
     int fclose(saved);
-}*/
-void load ();
- int I,J;
+}
+void load (){
+ int i,i;
     FILE *saved;
     saved = fopen(C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt, r); //le chemin du fichier qui contiendra le sauvgardage
         if (saved == NULL)
     {
         exit(EXIT_FAILURE);
     }
+    for (int i=0; i<9;i++){
+        for (int j=0; i<9;i++){
+            fgets(Board[i][j], 3, (FILE*)saved); //3 est le nombre de caractere qu'on veut lire - 1, donc c'est 2 l'indice ligne et colonne 
+        }
+    }
+        int fclose(saved);
+    }
 
-    int fclose(saved);
- return 0;
+
 void save (char tab[8][8]){
  int I,J;
     FILE *saved;
     saved = fopen(C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt, w); //le chemin du fichier qui contiendra le sauvgardage
 
     for (I=0; I<9; I++){
-        for (J=0; J<10; J++){
+        for (J=0; J<9; J++){
            fprintf(saved,"%c",&tab[I][J]);}}
     int fclose(saved);
- return 0;
 }
 
 
@@ -834,21 +834,5 @@ printf("\t\t  ####****************************####\n");
 printf("\t\t  a  b  c  d  e  f  g  h\n");
 for(i=0;i<8;i++){
 printf("\t\t%d:__,__,__,__,__,__,__,__,\n",i+1);}}
-<<<<<<< Updated upstream
-typedef struct joueur{
-char nom[20];
-char score[20];
-struct joueur*suivant;}joueur;
 jeu();}
 
-
-
-
-
-
-=======
-jeu();
->>>>>>> Stashed changes
-
-
-}
