@@ -702,7 +702,7 @@ system("cls");
 if(Pla>Opp)
 {
  position(30,10);
- printf("vous avez ruessi !!!!!!");
+ printf("vous avez reussi !!!!!!");
  printf("vous voulez voir votre historique? (y=1/n=0)");
 scanf("%d",&n);
 if (n==1){showmouvement(history);}
@@ -799,6 +799,7 @@ void save(historique *Historique)   //fonction qui affiche les mouvements effect
     printf("NULL\n");
     int fclose(saved);
 }
+void load (historique *Historique)
 
 
 
