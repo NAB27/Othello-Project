@@ -6,11 +6,7 @@
 #include<time.h>
 
 int*chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
-void*creation_joueur();    //cree les nouveaux joueurs 
-int*chercher(FILE*Fichier);
-void*creation_joueur();
-void position(short x, short y);
-void Display(char Board[8][8]);
+void*creation_joueurr();    //cree les nouveaux joueurs 
 int n,n2; // on va utiliser cette variable pour savoir si l'utilisateur veut que la partie soit enregistrée ou pas
 
 typedef struct joueurr{
@@ -18,6 +14,43 @@ char nom[20];
 char score[20];
 struct joueurr*suivant;}joueurr;
 
+void*creation_joueurr(){
+FILE*fichier;
+fichier=fopen("projet_c","w+"); //la recherche premierement
+//infos
+char nom[20];
+int score;
+char mot_de_passe;
+if((chercher(fichier))==0){
+scanf("%s",nom);
+score=0;
+fprintf(fichier,"%s\n%d\n ",&nom,&score);}
+/*****le deuxieme***/
+if(chercher(fichier)==0){  //nouveau joueur
+scanf("%s",nom);
+score=0;                    //score nul
+fprintf(fichier,"%s\n%d\n ",&nom,&score);}}
+void*affichage_scores(joueurr*list){
+//tri de la liste chainee(tri a bulles)
+    joueurr*p;
+    int d=1;
+    char permu[20];
+    while(d==1)
+    {d=0;
+    for(p=list;p!=NULL;p=p->suivant)
+    {if((p->score)>((p->suivant)->score))
+        {strcpy(permu,(p->score));
+         strcpy((p->score),((p->suivant)->score));
+         strcpy(((p->suivant)->score),permu);
+        d=1;
+        }}}
+/*affichages des scores***/    //la pracours de liste triee
+if (list==NULL){
+printf(" Liste vide !!\n"); return 0 ;}
+else { joueurr*temp=list;
+        while(temp!=NULL){
+        printf("%s",temp->nom);
+        printf("%s",temp->score);}}}
 
 /*#####livrable1#######*/
 int*chercher(FILE*Fichier){
@@ -552,7 +585,11 @@ void jeux (void) {
 
 
 int main (void) {
-
+    printf("\t\t  ####****************************####\n");
+    printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
+        printf("\t\t  ##\t      realise par    \t    ##\n");
+            printf("\t\t  ##\t Nabih MOCHIR & Manal MOUFLIH\t    ##\n");
+    printf("\t\t  ####****************************####\n");
     jeux();
     fflush(stdin);
     printf("vous voulez recommencer? (y)oui ou (n)non? ");
