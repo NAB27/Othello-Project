@@ -5,6 +5,7 @@
 #include<windows.h>
 #include<time.h>
 /*************prototype*************/
+<<<<<<< Updated upstream
 int*chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
 void*creation_joueur();    //cree les nouveaux joueurs 
 void*jeu();                    //le jeu complet
@@ -22,7 +23,19 @@ typedef struct securite{
 char nom[20];
 char mot_de_passe[16];
 struct securite*suivant;}securite;
+=======
+int*chercher(FILE*Fichier);
+void*creation_joueur();
+void*jeu();
+void position(short x, short y);
+void Display(char Board[8][8]);
+int n,n2; // on va utiliser cette variable pour savoir si l'utilisateur veut que la partie soit enregistrée ou pas
+>>>>>>> Stashed changes
 
+typedef struct joueur{
+char nom[20];
+char score[20];
+struct joueur*suivant;}joueur;
 
 
 /*#####livrable1#######*/
@@ -41,6 +54,84 @@ int*chercher(FILE*Fichier){
     fclose(Fichier);
     printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");    
     return 0;}
+
+
+
+typedef struct mouvement mouvement; //structure  qui contient les données relatives au mouvement effectués par les joueurs
+struct mouvement
+{
+    char coordonnee[10];
+    char player[2];
+    int numero;
+    mouvement *suivant;
+};
+
+typedef struct historique historique; // liste qui contient le premier  mouvement effectué
+struct historique
+{
+    mouvement *premier;
+
+};
+
+
+historique *initialmouvement() //fonction qui initialise la liste chainée historique
+{
+    historique *Historique = malloc(sizeof(*Historique));
+    mouvement *mvt = malloc(sizeof(*mvt));
+
+    if (Historique == NULL || mvt == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+        mvt->numero = 0;
+        strcpy(mvt->player,"vide");
+        /*mvt->player = NULL;*/
+        strcpy(mvt->coordonnee,"vide");
+        /*mvt->coordonnee = NULL;*/
+        mvt->suivant = NULL;
+
+    Historique->premier = mvt;
+
+    return Historique;
+}
+
+void insertmouvement(historique *Historique, char newplayer, char newcoordonnee) //fonction qui ajoute les mouvements dans la liste chainée historique
+{
+    mouvement *new = malloc(sizeof(*new));
+    if (Historique == NULL || new == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+         new->numero = new->numero + 1;
+        strcpy(new->player,newplayer);
+        //new->player = newplayer;
+        strcpy(new->coordonnee,newcoordonnee);
+        //new->coordonnee = newcoordonnee;
+
+    new->suivant = Historique->premier;
+    Historique->premier = new;
+}
+
+void showmouvement(historique *Historique)   //fonction qui affiche les mouvements effectuées durant le match
+{
+    if (Historique == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    mouvement *current = Historique->premier;// variable locale de type mouvement pour parcourir la liste chainée
+
+    while (current != NULL)
+    {
+        printf("%d -> ", current->numero);
+        printf("%c -> ", current->player);
+        printf("%c -> ", current->coordonnee);
+        current = current->suivant;
+    }
+    printf("NULL\n");
+}
+
 
 /****fonction qui cree les joueurs nouveaux pour les autres conserve meme score**/
 
@@ -70,8 +161,13 @@ fichier=fopen("manal","r");
 while(fgets(joueur1->nom,20,fichier)&&fgets(joueur1->score,20,fichier)){joueur1->suivant=list;
                                                                           list=joueur1;}
 return list;}
+<<<<<<< Updated upstream
 void*affichage_scores(joueur*list){ //tri de la liste
 //tri de la liste chainee(tri a bulles)   
+=======
+void*affichage_scores(joueur*list){
+//tri de la liste chainee(tri a bulles)
+>>>>>>> Stashed changes
 	joueur*p;
 	int d=1;
 	char permu[20];
@@ -127,8 +223,10 @@ printf("\t\t  ####****************************####\n");
 printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
 printf("\t\t  ####****************************####\n");
 Sleep(3000);
-printf("Entrer votre symbole et de votre adversaire ");
-scanf("%c %c",&A,&B);
+printf("Entrer le symbole de 1er joueur: ");
+scanf("%c",&A);
+printf("Entrer le symbole du deuxieme joueur: ");
+scanf("%c",&B);
 if(A==B)
 {
  printf("les symboles se ressemblent........");  //les memes symboles
@@ -154,22 +252,22 @@ Sleep(1000);
 printf("\nEntrer votre Position: ( tq A3,B4)");
 gets(pos);
 pos[0]=toupper(pos[0]); //la gestion de position par rapport au tableau
-if(pos[0]=='A')
-X = 0;
-else if(pos[0]=='B')
-X = 1;
-else if(pos[0]=='C')
-X = 2;
-else if(pos[0]=='D')
-X = 3;
-else if(pos[0]=='E')
-X = 4;
-else if(pos[0]=='F')
-X = 5;
-else if(pos[0]=='G')
-X = 6;
-else if(pos[0]=='H')
-X = 7;
+if(pos[0]=='A'){
+X = 0; insertmouvement(history, A, pos);} // on insere la position donnee une seule fois en depant de le premier indice coordonnee
+else if(pos[0]=='B'){
+X = 1; insertmouvement(history, A, pos);}
+else if(pos[0]=='C'){
+X = 2; insertmouvement(history, A, pos);}
+else if(pos[0]=='D'){
+X = 3; insertmouvement(history, A, pos);}
+else if(pos[0]=='E'){
+X = 4; insertmouvement(history, A, pos);}
+else if(pos[0]=='F'){
+X = 5; insertmouvement(history, A, pos);}
+else if(pos[0]=='G'){
+X = 6; insertmouvement(history, A, pos);}
+else if(pos[0]=='H'){
+X = 7; insertmouvement(history, A, pos);}
 else
 {
  printf("Entrer une autre fois...");
@@ -605,17 +703,35 @@ if(Pla>Opp)
 {
  position(30,10);
  printf("vous avez ruessi !!!!!!");
+ printf("vous voulez voir votre historique? (y=1/n=0)");
+scanf("%d",&n);
+if (n==1){showmouvement(history);}
+ printf("vous voulez sauvgarder la parite? (y=1/n=0)");
+scanf("%d",&n2);
+if (n==1){save(history);}
 }
 if(Pla<Opp)
 {
  position(30,10);
  printf("votre adversaire a ruessi !!!!!!");
+ printf("vous voulez voir votre historique? (y=1/n=0)");
+scanf("%d",&n);
+if (n==1){showmouvement(history);}
+ printf("vous voulez sauvgarder la parite? (y=1/n=0)");
+scanf("%d",&n2);
+if (n==1){save(history);}
 }
 if(Pla==Opp)
 {
  position(30,10);
  printf("egalite !!!!!!");
-}
+ printf("vous voulez voir votre historique? (y=1/n=0)");
+scanf("%d",&n);
+if (n==1){showmouvement(history);}
+
+ printf("vous voulez sauvgarder la parite? (y=1/n=0)");
+scanf("%d",&n2);
+if (n==1){save(history);}}
 getch();}
 
 
@@ -663,13 +779,32 @@ void connection(securite*debut){
     debut=utilisateur;}
 }
 
+void save(historique *Historique)   //fonction qui affiche les mouvements effectuées durant le match
+{
+        FILE *saved;
+        saved = fopen(C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt, w); //le chemin du fichier qui contiendra le sauvgardage
 
+    if (Historique == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
 
+    mouvement *current = Historique->premier;// variable locale de type mouvement pour parcourir la liste chainée
+
+    while (current != NULL)
+    {
+        fprintf(saved,"%c",current->coordonnee);
+        current = current->suivant;
+    }
+    printf("NULL\n");
+    int fclose(saved);
+}
 
 
 
 ///#####################################MAIN#############################################
 int main(){
+historique history = initialmouvement();
 int i;
 char car;
 printf("si vous voulez recomencer le jeu tapez");
@@ -681,6 +816,7 @@ printf("\t\t  ####****************************####\n");
 printf("\t\t  a  b  c  d  e  f  g  h\n");
 for(i=0;i<8;i++){
 printf("\t\t%d:__,__,__,__,__,__,__,__,\n",i+1);}}
+<<<<<<< Updated upstream
 typedef struct joueur{
 char nom[20];
 char score[20];
@@ -692,6 +828,9 @@ jeu();}
 
 
 
+=======
+jeu();
+>>>>>>> Stashed changes
 
 
 }
