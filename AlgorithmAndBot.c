@@ -5,31 +5,136 @@
 #include<windows.h>
 #include<time.h>
 
-int*chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
-void*creation_joueurr();    //cree les nouveaux joueurs 
-int n,n2; // on va utiliser cette variable pour savoir si l'utilisateur veut que la partie soit enregistrée ou pas
+// structures
+typedef struct mouvement mouvement; //structure  qui contient les donnees relatives au mouvement effectues par les joueurs
+struct mouvement
+{
+    char coordonnee[10];
+    char player[2];
+    int numero;
+    mouvement *suivant;
+};
 
+typedef struct historique historique; // liste qui contient le premier  mouvement effectue
+struct historique
+{
+    mouvement *premier;
+
+};
+
+historique *iniitialmouvement() //fonction qui initialise la liste chainee historique
+{
+    historique *Historique = malloc(sizeof(*Historique));
+    mouvement *mvt = malloc(sizeof(*mvt));
+
+    if (Historique == NULL || mvt == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+        mvt->numero = 0;
+        strcpy(mvt->player,"vide");
+        /*mvt->player = NULL;*/
+        strcpy(mvt->coordonnee,"vide");
+        /*mvt->coordonnee = NULL;*/
+        mvt->suivant = NULL;
+
+    Historique->premier = mvt;
+
+    return Historique;
+}
+
+void insertmouvement(historique Historique, char newplayer, char newcoordonnee) //fonction qui ajoute les mouvements dans la liste chainee historique
+{
+    mouvement *new = malloc(sizeof(*new));
+    /*if (Historique == NULL || new == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }*/
+         new->numero = new->numero + 1;
+        strcpy(new->player,&newplayer);
+        //new->player = newplayer;
+        strcpy(new->coordonnee,&newcoordonnee);
+        //new->coordonnee = newcoordonnee;
+
+    new->suivant = Historique.premier;
+    Historique.premier = new;
+}
+//historique history = iniitialmouvement();///////////////////////////////////////////////////////////
+void showmouvement(historique *Historique)   //fonction qui affiche les mouvements effectuees durant le match
+{
+    if (Historique == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    mouvement *current = Historique->premier;// variable locale de type mouvement pour parcourir la liste chainee
+
+    while (current != NULL)
+    {
+        printf("%d -> ", current->numero);
+        printf("%c -> ", current->player);
+        printf("%c -> ", current->coordonnee);
+        current = current->suivant;
+    }
+    printf("NULL\n");
+}
+void save_pointeur(historique *Historique)   //fonction qui affiche les mouvements effectuees durant le match
+{
+        FILE *saved;
+        saved = fopen("C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt", "w"); //le chemin du fichier qui contiendra le sauvgardage
+
+    if (Historique == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    mouvement *current = Historique->premier;// variable locale de type mouvement pour parcourir la liste chainee
+
+    while (current != NULL)
+    {
+        fprintf(saved,"%c",current->coordonnee);
+        current = current->suivant;
+    }
+    printf("NULL\n");
+    fclose(saved);
+}
+/*void load (){
+ int iii,jjj;
+    FILE *saved;
+    saved = fopen("C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt", "r"); //le chemin du fichier qui contiendra le sauvgardage
+        if (saved == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+    for (int iii=0; iii<9;iii++){
+        for (int jjj=0; jjj<9;jjj++){
+            fgets(Board[iii][jjj], 3, (FILE*)saved); //3 est le nombre de caractere qu'on veut lire - 1, donc c'est 2 l'indice ligne et colonne 
+        }
+    }
+         fclose(saved);
+    }
+*/
+
+void save (char tab[8][8]){
+ int I,J;
+    FILE *saved;
+    saved = fopen("C:\\Users\\user\\Documents\\Studies\\ENSIAS\\othelloproject.txt", "w"); //le chemin du fichier qui contiendra le sauvgardage
+
+    for (I=0; I<9; I++){
+        for (J=0; J<9; J++){
+           fprintf(saved,"%c",&tab[I][J]);}}
+     fclose(saved);
+}
+
+int chercher(FILE*Fichier);  //cherche si le joueur existe dans le fichier
+void*creation_joueurr();    //cree les nouveaux joueurs 
+int n,n2; // on va utiliser cette variable pour savoir si l'utilisateur veut que la partie soit enregistree ou pas
+    int Historytab[60];
 typedef struct joueurr{
 char nom[20];
 char score[20];
 struct joueurr*suivant;}joueurr;
-/*#####livrable1#######*/
-
-int*chercher(FILE*Fichier){
-    char motFr[30], motR[30];
-    Fichier = fopen("projet_c.txt", "r");
-    if (!Fichier)
-         printf("\aERREUR: Impossible d'ouvrir le fichier\n");
-    printf("\tentrer votre nom slv\t");
-    scanf("%s",&motR);
-    while(fgets(motFr,30,Fichier) != NULL)
-    {if (strstr(motFr,motR) != NULL){
-          printf("||||joueur deja existe bienvenue autre fois||||\n");    //deja existe 
-          return 1;}
-    }
-    fclose(Fichier);
-    printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");    
-    return 0;}
 
 void*creation_joueurr(){
 FILE*fichier;
@@ -47,8 +152,6 @@ if(chercher(fichier)==0){  //nouveau joueur
 scanf("%s",nom);
 score=0;                    //score nul
 fprintf(fichier,"%s\n%d\n ",&nom,&score);}}
-
-
 void*affichage_scores(joueurr*list){
 //tri de la liste chainee(tri a bulles)
     joueurr*p;
@@ -71,6 +174,22 @@ else { joueurr*temp=list;
         printf("%s",temp->nom);
         printf("%s",temp->score);}}}
 
+/*#####livrable1#######*/
+int chercher(FILE*Fichier){
+    char motFr[30], motR[30];
+    Fichier = fopen("projet_c.txt", "r");
+    if (!Fichier)
+         printf("\aERREUR: Impossible d'ouvrir le fichier\n");
+    printf("\tentrer votre nom slv\t");
+    scanf("%s",&motR);
+    while(fgets(motFr,30,Fichier) != NULL)
+    {if (strstr(motFr,motR) != NULL){
+          printf("||||joueur deja existe bienvenue autre fois||||\n");    //deja existe 
+          return 1;}
+    }
+    fclose(Fichier);
+    printf("|||bienvenue nouveau joueur entrer vos infos(nom) pour l'enregistrement|||\n ");    
+    return 0;}
 
 const int chemin[8]= {-11, -10, -9, -1, 1, 9, 10, 11};
 const int table=100;
@@ -163,6 +282,8 @@ int totale (int combatant, int * latabl) {
     return t;
 }
 
+
+
 void afficher (int * latabl) {
     int row, col;
     printf("    1 2 3 4 5 6 7 8 \n");
@@ -250,7 +371,7 @@ int suivantt (int * latabl, int ancombatant, int pf) {
     opp = adv(ancombatant);
     if (deplacementpossible(opp, latabl)) return opp;
     if (deplacementpossible(ancombatant, latabl)) {
-        if (pf) printf("%c aucun mouvement possible! tourne est donnée à l'adverssaire\n", pointp(opp));
+        if (pf) printf("%c aucun mouvement possible! tourne est donnee à l'adverssaire\n", pointp(opp));
         return ancombatant;
     }
     return 0;
@@ -420,11 +541,16 @@ int optimise(int combatant, int * latabl) {
 void avoirmvt (int (* plans) (int, int *), int combatant, int * latabl,
                int pf) {
     int mouvement;
+    int gg;
+    int Historytab[60];
     if (pf) afficher(latabl);
     mouvement = (* plans)(combatant, latabl);
     if (ppossible(mouvement, combatant, latabl)) {
-        if (pf) printf("%c déplacée vers %d\n", pointp(combatant), mouvement);
+        if (pf) printf("%c deplacee vers %d\n", pointp(combatant), mouvement);
+        //insertmouvement(history, pointp(combatant) , mouvement);
         deplacer(mouvement, combatant, latabl);
+        Historytab[gg] = mouvement;
+        gg=gg+1;
     }
     else {
         printf("mouvement impossible %d\n", mouvement);
@@ -576,7 +702,7 @@ void jeux (void) {
     if (fr1 == joueur || fr2 == joueur) pf = 1;
     else {
         printf("       \n");
-        printf("Aucun joueur n'est détecté ");
+        printf("Aucun joueur n'est detecte ");
         scanf("%d", &pf);
     }
 
@@ -586,19 +712,22 @@ void jeux (void) {
 
 
 int main (void) {
-int i;
-char car;
-printf("si vous voulez recomencer le jeu tapez r ");
-scanf("%s",&car);
-if(car==114){
-printf("\t\t  ####****************************####\n");
-printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
-printf("\t\t  ####****************************####\n");
-printf("\t\t  a  b  c  d  e  f  g  h\n");
-for(i=0;i<8;i++){
-printf("\t\t%d:__,__,__,__,__,__,__,__,\n",i+1);}}
+
+    printf("\t\t  ####****************************####\n");
+    printf("\t\t  ##\t      OTHELLO GAME    \t    ##\n");
+        printf("\t\t  ##\t      realise par    \t    ##\n");
+            printf("\t\t  ##\t Nabih MOCHIR & Manal MOUFLIH\t    ##\n");
+    printf("\t\t  ####****************************####\n");
     jeux();
     fflush(stdin);
+    printf("voulez vous voir les mouvements effectuees (y)oui ou (n)non?\n");
+    if (getchar() == 'y') {
+        for (int ggg=0; ggg<61; ggg++){printf("%d",&Historytab[ggg]);}
+}
+    printf("vous voulez recommencer? (y)oui ou (n)non? ");
+    if (getchar() == 'y') {
+        jeux();
+        fflush(stdin);
 
     }
 }
