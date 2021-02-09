@@ -219,7 +219,7 @@ void * jeu[9][4] = {
     {"optimise", "contre ordinateur optimise", optimise},
 
     {NULL, NULL, NULL}
-};
+};// le menu
 
 
 typedef int (* fpc) (int, int *);
@@ -229,7 +229,7 @@ typedef int (* fpc) (int, int *);
 char pointp (int p) {
     static char pn[5] = ".BW*";
     return(pn[p]);
-}
+}// on initialise la table avec les trois caractere possible, B noir, W blanc, . vide, *
 
 
 
@@ -243,7 +243,7 @@ int adv (int combatant) {
         printf("joueur invalide\n");
         return 0;
     }
-}
+}// fonction qui construit l'adverssere
 
 
 
@@ -252,7 +252,7 @@ int * enregistrer (int * latabl) {
     nvtable = (int *)malloc(table * sizeof(int));
     for (i=0; i<table; i++) nvtable[i] = latabl[i];
     return nvtable;
-}
+} //enregistre la table 
 
 
 
@@ -270,7 +270,7 @@ int * debut (void) {
     latabl[54]=noir;
     latabl[55]=blanc;
     return latabl;
-}
+}// fct qui initialise la table
 
 
 
@@ -280,7 +280,7 @@ int totale (int combatant, int * latabl) {
     for (i=1; i<=88; i++)
         if (latabl[i] == combatant) t++;
     return t;
-}
+} // determiner le totale des points pour chaque combatant
 
 
 
@@ -293,7 +293,7 @@ void afficher (int * latabl) {
             printf("%c ", pointp(latabl[col + (10 * row)]));
         printf("\n");
     }
-}
+}// afficher le tableau
 
 
 
@@ -301,15 +301,15 @@ int possim (int mouvement) {
     if ((mouvement >= 11) && (mouvement <= 88) && (mouvement%10 >= 1) && (mouvement%10 <= 8))
         return 1;
     else return 0;
-}
+}// condition sur l'emplacement
 
 
 
-int entrepiece(int square, int combatant, int * latabl, int dir) {
-    while (latabl[square] == adv(combatant)) square = square + dir;
-    if (latabl[square] == combatant) return square;
+int entrepiece(int sq, int combatant, int * latabl, int dir) {
+    while (latabl[sq] == adv(combatant)) sq = sq + dir;
+    if (latabl[sq] == combatant) return sq;
     else return 0;
-}
+} 
 
 
 int permuter (int mouvement, int combatant, int * latabl, int dir) {
