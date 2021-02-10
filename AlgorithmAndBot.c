@@ -43,6 +43,7 @@ historique *iniitialmouvement() //fonction qui initialise la liste chainee histo
 
     return Historique;
 }
+int ff=1;
 
 void insertmouvement(historique Historique, char newplayer, char newcoordonnee) //fonction qui ajoute les mouvements dans la liste chainee historique
 {
@@ -136,9 +137,10 @@ char nom[20];
 char score[20];
 struct joueurr*suivant;}joueurr;
 
+
 void*creation_joueurr(){
 FILE*fichier;
-fichier=fopen("projet_c","w+"); //la recherche premierement
+fichier=fopen("C:\\Users\\user\\Documents\\Studies\\ENSIAS\\Final project\\MOCHIR_MOUFLIH(derniere version)\\Othello-Project-main\\projet_c.txt","w+"); //la recherche premierement
 //infos
 char nom[20];
 int score;
@@ -152,6 +154,16 @@ if(chercher(fichier)==0){  //nouveau joueur
 scanf("%s",nom);
 score=0;                    //score nul
 fprintf(fichier,"%s\n%d\n ",&nom,&score);}}
+
+joueurr*remplissage(){  
+joueurr*list=NULL;
+joueurr*joueur1;
+joueur1=(joueurr*)malloc(sizeof(joueurr));
+FILE*fichier;
+fichier=fopen("C:\\Users\\user\\Documents\\Studies\\ENSIAS\\Final project\\MOCHIR_MOUFLIH(derniere version)\\Othello-Project-main\\projet_c.txt","r");
+while(fgets(joueur1->nom,20,fichier)&&fgets(joueur1->score,20,fichier)){joueur1->suivant=list;
+                                                                          list=joueur1;}
+return list;}
 void*affichage_scores(joueurr*list){
 //tri de la liste chainee(tri a bulles)
     joueurr*p;
@@ -286,6 +298,8 @@ int totale (int combatant, int * latabl) {
 
 void afficher (int * latabl) {
     int row, col;
+    printf("    partie n %d \n",ff);
+    ff=ff+1;
     printf("    1 2 3 4 5 6 7 8 \n");
     for (row=1; row<=8; row++) {
         printf("%d  ", 10*row);
@@ -730,4 +744,7 @@ int main (void) {
         fflush(stdin);
 
     }
+        joueurr *jliste = remplissage();
+    creation_joueurr();
+    affichage_scores(jliste);
 }
