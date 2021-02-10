@@ -725,6 +725,7 @@ int main (void) {
         for (int ggg=0; ggg<61; ggg++){printf("%d",&Historytab[ggg]);}
 }
     printf("vous voulez recommencer? (y)oui ou (n)non? ");
+    creation_joueurr();
     if (getchar() == 'y') {
         jeux();
         fflush(stdin);
